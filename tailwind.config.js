@@ -8,5 +8,6 @@ module.exports = {
   theme: {
     extend: {},
   },
+  css: ["./src/app/globals.css"],
   plugins: [],
 };

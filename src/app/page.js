@@ -1,9 +1,14 @@
 import Image from "next/image";
-
+import Link from "next/link";
+import Todo from "./Todo/page";
+import Header from "../Components/Header/page";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hello
+    <main>
+      <Header />
+      <div className="pt-16">
+        <Todo />
+      </div>
     </main>
   );
 }
