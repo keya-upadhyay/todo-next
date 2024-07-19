@@ -2,42 +2,37 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const NewTodoList = ({ createTodo }) => {
-  const [userInput, setUserInput] = useState({
-    task: "",
-  });
+const NewTodoList = ({ createTodo, todos }) => {
+  const [userInput, setUserInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (userInput !== "") {
-      let newTodo = { task: userInput.task };
-      createTodo(newTodo);
-      setUserInput({ task: "" });
-    } else {
+    if (userInput === "") {
       toast.warn("Plase fill out form ");
+    } else {
+      let newTodo = { task: userInput, id: todos.length + 1 };
+      createTodo(newTodo);
+      setUserInput("");
     }
   };
 
   const handleChnage = (e) => {
-    if (userInput === "") {
-      toast.warn("Plase fill out form ");
-    } else {
-      setUserInput({ [e.target.name]: e.target.value });
-    }
+    setUserInput(e.target.value);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-x-10 flex items-center ">
       <input
         id="task"
         type="text"
         name="task"
-        value={userInput.task}
+        value={userInput}
         onChange={handleChnage}
         placeholder="Please enter value"
       />
-      <button type="submit">Save</button>
+      <button type="submit" className="bg-slate-800 py-2 px-4">
+        Save
+      </button>
     </form>
   );
 };
