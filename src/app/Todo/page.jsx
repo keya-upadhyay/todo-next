@@ -24,7 +24,7 @@ const Page = () => {
     setTodos([...todos, newTodo]);
   };
 
-  const todo = todos.map((todo, index) => (
+  const todo = todos.map((todo) => (
     <TodoList
       key={todo.id}
       todo={todo}
