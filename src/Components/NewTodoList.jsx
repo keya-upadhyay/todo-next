@@ -2,16 +2,17 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const NewTodoList = ({ createTodo, todos }) => {
+const NewTodoList = ({ createTodo }) => {
   const [userInput, setUserInput] = useState("");
+  // const [userInput, setUserInput] = useState([{task:""}]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // let ids = Math.random(todos.id).toFixed(2);
     if (userInput === "") {
-      toast.warn("Plase fill out form ");
+      toast.warn("Plase fill out form");
     } else {
-      let newTodo = { task: userInput, id: todos.length + 1 };
-      createTodo(newTodo);
+      createTodo(userInput);
       setUserInput("");
     }
   };
@@ -21,7 +22,7 @@ const NewTodoList = ({ createTodo, todos }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-x-10 flex items-center ">
+    <form onSubmit={handleSubmit} className="space-x-10 flex items-center">
       <input
         id="task"
         type="text"
