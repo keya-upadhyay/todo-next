@@ -4,11 +4,9 @@ import { toast } from "react-toastify";
 
 const NewTodoList = ({ createTodo }) => {
   const [userInput, setUserInput] = useState("");
-  // const [userInput, setUserInput] = useState([{task:""}]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // let ids = Math.random(todos.id).toFixed(2);
     if (userInput === "") {
       toast.warn("Plase fill out form");
     } else {
@@ -31,7 +29,7 @@ const NewTodoList = ({ createTodo }) => {
         onChange={handleChnage}
         placeholder="Please enter value"
       />
-      <button type="submit" className="bg-slate-800 py-2 px-4">
+      <button type="submit" className="bg-slate-800 py-2 px-4 top">
         Save
       </button>
     </form>

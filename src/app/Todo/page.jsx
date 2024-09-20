@@ -15,6 +15,7 @@ const Page = () => {
     setTodos(a);
     setOpen({ state: false, id: null });
   };
+
   const handleDelete = (id) => {
     setOpen({ state: true, id: id });
   };

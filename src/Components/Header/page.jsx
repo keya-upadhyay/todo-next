@@ -15,7 +15,9 @@ const page = () => {
         </div>
         <ul>
           <li>
-            <Link href="/">List</Link>
+            <Link href="/Todo">List</Link>
+            <Link href="/products">Products</Link>
+            <Link href="/user">user</Link>
           </li>
         </ul>
       </nav>

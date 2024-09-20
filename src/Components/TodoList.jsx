@@ -47,6 +47,7 @@ const TodoList = ({ todo, remove, update, checkTask, setCheckTask }) => {
               }}
               checked={checkTask}
             ></input> */}
+
             <input
               type="checkbox"
               id={todo.id}
