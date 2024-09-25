@@ -2,6 +2,7 @@
 import NewUserList from "@/Components/NewUserList";
 import RemoveDataPopUp from "@/Components/RemoveDataPopUp";
 import UserList from "@/Components/UserList";
+import { Magnifier } from "@/assets/icons/Maginifier";
 import React, { useState } from "react";
 const page = () => {
   const [searchData, setSearchData] = useState("");
@@ -19,6 +20,7 @@ const page = () => {
     phone: "",
     age: "",
     hobby: "Hobby",
+    isActive: true,
   });
 
   const [users, setUsers] = useState([
@@ -29,6 +31,7 @@ const page = () => {
       phone: "9876543210",
       age: "30",
       hobby: "Cricket",
+      isActive: true,
     },
     {
       id: "2",
@@ -37,6 +40,7 @@ const page = () => {
       phone: "8765432109",
       age: "28",
       hobby: "Dancing",
+      isActive: false,
     },
     {
       id: "3",
@@ -45,6 +49,7 @@ const page = () => {
       phone: "7654321098",
       age: "35",
       hobby: "Reading",
+      isActive: true,
     },
     {
       id: "4",
@@ -53,6 +58,7 @@ const page = () => {
       phone: "6543210987",
       age: "25",
       hobby: "Cooking",
+      isActive: true,
     },
     {
       id: "5",
@@ -61,6 +67,7 @@ const page = () => {
       phone: "5432109876",
       age: "32",
       hobby: "Traveling",
+      isActive: true,
     },
     {
       id: "6",
@@ -69,6 +76,7 @@ const page = () => {
       phone: "4321098765",
       age: "29",
       hobby: "Painting",
+      isActive: true,
     },
   ]);
 
@@ -80,6 +88,7 @@ const page = () => {
       phone: "9876543210",
       age: "30",
       hobby: "Cricket",
+      isActive: true,
     },
     {
       id: "2",
@@ -88,6 +97,7 @@ const page = () => {
       phone: "8765432109",
       age: "28",
       hobby: "Dancing",
+      isActive: false,
     },
     {
       id: "3",
@@ -96,6 +106,7 @@ const page = () => {
       phone: "7654321098",
       age: "35",
       hobby: "Reading",
+      isActive: true,
     },
     {
       id: "4",
@@ -104,6 +115,7 @@ const page = () => {
       phone: "6543210987",
       age: "25",
       hobby: "Cooking",
+      isActive: true,
     },
     {
       id: "5",
@@ -112,6 +124,7 @@ const page = () => {
       phone: "5432109876",
       age: "32",
       hobby: "Traveling",
+      isActive: true,
     },
     {
       id: "6",
@@ -120,10 +133,15 @@ const page = () => {
       phone: "4321098765",
       age: "29",
       hobby: "Painting",
+      isActive: true,
     },
   ]);
 
   const [matchUser, setMatchUser] = useState([]);
+
+  const [isuserActive, setIsUserActive] = useState(true);
+
+  const [count, setCount] = useState(0);
 
   function creatNewUser(newUser) {
     setUsers([...users, newUser]);
@@ -191,7 +209,7 @@ const page = () => {
     }
   }
 
-  function searchDatas(e) {
+  function handleInputSearch(e) {
     let searchString = e.target.value;
     if (searchString === "") {
       setUsers(originalUsers);
@@ -200,33 +218,123 @@ const page = () => {
     setSearchData(searchString);
   }
 
+  function handleActiveUser(id, flag) {
+    let activeUser = users.map((item) => {
+      if (item.id === id) {
+        return { ...item, isActive: !flag };
+      } else {
+        return item;
+      }
+    });
+
+    setUsers(activeUser);
+  }
+
+  function handleToggleActive() {
+    const activeUsers = users.filter((item) => {
+      return item.isActive === true;
+    });
+
+    if (isuserActive === true) {
+      setUsers([...activeUsers]);
+      setIsUserActive(!isuserActive);
+    } else {
+      setUsers([...originalUsers]);
+      setIsUserActive(!isuserActive);
+    }
+  }
+
+  function handleCountMinus() {
+    if (count >= 1) {
+      setCount(count - 1);
+      const matchCountIndexUser = originalUsers.filter((item) => {
+        return +item.id === count - 1;
+      });
+      setUsers(matchCountIndexUser);
+    } else {
+      setUsers([...originalUsers]);
+    }
+  }
+
+  function handleCountPlus() {
+    setCount(count + 1);
+
+    let countExceed = originalUsers.length + 1;
+
+    if (count <= countExceed) {
+      let b = count + (1 % countExceed);
+      setCount(b);
+
+      const matchCountIndexUser = originalUsers.filter((item) => {
+        return +item.id === b;
+      });
+
+      setUsers(matchCountIndexUser);
+    } else {
+      setUsers([...originalUsers]);
+    }
+  }
+
   return (
     <>
       <div className="space-y-3 container mx-auto py-5">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="px-4 py-2 text-zinc-400 bg-zinc-700"
-        >
-          Add user
-        </button>
-        <div className="flex items-center space-x-2">
-          <input onChange={searchDatas} />
+        <div className="flex items-center justify-between">
+          {/* add new user */}
           <button
-            onClick={handleSearch}
-            className="text-zinc-600 p-2 flex-none"
+            onClick={() => setIsOpen(true)}
+            className="px-4 py-2 text-zinc-400 bg-zinc-700"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16A6.5 6.5 0 0 1 3 9.5A6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5"
-              />
-            </svg>
+            Add user
           </button>
+
+          <div className="flex items-center space-x-3">
+            <button
+              className="p-2 bg-zinc-800 text-zinc-600 h-8 w-8 text-lg leading-none"
+              onClick={handleCountMinus}
+            >
+              -
+            </button>
+            <span className="px-2">{count}</span>
+            <button
+              className="p-2 bg-zinc-800 text-zinc-600 h-8 w-8 text-lg leading-none"
+              onClick={handleCountPlus}
+            >
+              +
+            </button>
+          </div>
+
+          {/* searchData filter */}
+          <div className="flex items-center space-x-2">
+            <input onChange={handleInputSearch} name="searhInput" />
+            <button
+              onClick={handleSearch}
+              className="text-zinc-600 p-2 flex-none"
+            >
+              <Magnifier />
+            </button>
+          </div>
+
+          {/* Show active users */}
+          <div className="flex items-center">
+            <label className="mr-3 font-medium text-zinc-500">
+              Active users:
+            </label>
+
+            <div
+              onClick={handleToggleActive}
+              className={`relative w-14 h-7 rounded-full cursor-pointer transition-colors 
+              ${
+                isuserActive
+                  ? "bg-zinc-500 ransform translate-x-0"
+                  : "bg-zinc-700"
+              }`}
+            >
+              <div
+                className={`absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform 
+            ${!isuserActive ? "transform translate-x-7" : ""}`}
+              />
+            </div>
+          </div>
         </div>
 
         <NewUserList
@@ -246,6 +354,7 @@ const page = () => {
           removeData={confirmRemoveData}
           sortAscending={sortAgeAscending}
           sortNameByAscending={sortNamesByAscending}
+          handleActive={handleActiveUser}
         />
 
         <RemoveDataPopUp

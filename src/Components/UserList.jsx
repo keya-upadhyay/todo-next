@@ -1,4 +1,6 @@
 "use client";
+import EyeClossed from "@/assets/icons/eye-clossed";
+import EyeOpen from "@/assets/icons/eye-open";
 import React from "react";
 
 const UserList = ({
@@ -8,6 +10,7 @@ const UserList = ({
   sortAscending,
   matchUser,
   sortNameByAscending,
+  handleActive,
 }) => {
   return (
     <div className="overflow-x-auto text-zinc-400">
@@ -81,6 +84,9 @@ const UserList = ({
             <th className="py-2 px-4 font-light border-r border-zinc-700">
               Updated on
             </th>
+            <th className="py-2 px-4 font-light border-r border-zinc-700">
+              Active
+            </th>
             <th className="py-2 px-4 font-light border-r border-zinc-700"></th>
             <th className="py-2 px-4 font-light "></th>
           </tr>
@@ -119,6 +125,24 @@ const UserList = ({
               </td>
               <td className="py-2 px-4 border-r border-zinc-700">
                 {user?.date} - {user?.time}
+              </td>
+
+              <td className="py-2 px-4 border-r border-zinc-700 text-sm text-center">
+                {user?.isActive ? (
+                  <button
+                    onClick={() => handleActive(user.id, user?.isActive)}
+                    className="block w-full"
+                  >
+                    <EyeOpen />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleActive(user.id, user?.isActive)}
+                    className="block w-full"
+                  >
+                    <EyeClossed />
+                  </button>
+                )}
               </td>
 
               <td className="py-2 px-4 border-r border-zinc-700 text-center">

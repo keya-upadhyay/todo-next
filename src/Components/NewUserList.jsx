@@ -9,6 +9,7 @@ const NewUserList = ({
   setUsers,
   isOpen,
   setIsOpen,
+  isActive,
 }) => {
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,10 +25,6 @@ const NewUserList = ({
 
     const timeZones = {
       AEST: "Australia/Sydney",
-      // ACST: "Australia/Adelaide",
-      // AWST: "Australia/Perth",
-      // AEDT: "Australia/Melbourne",
-      // ACDT: "Australia/Adelaide",
     };
 
     function getTimeInTimeZone(timeZone) {
@@ -74,6 +71,7 @@ const NewUserList = ({
           id: newId,
           date: createdDate,
           time: timesInTimeZones,
+          isActive: true,
         });
         setUserInput(initialValue);
         setIsOpen(false);
