@@ -3,7 +3,7 @@ import NewUserList from "@/Components/NewUserList";
 import RemoveDataPopUp from "@/Components/RemoveDataPopUp";
 import UserList from "@/Components/UserList";
 import { Magnifier } from "@/assets/icons/Maginifier";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 const page = () => {
   const [searchData, setSearchData] = useState("");
 
@@ -12,6 +12,12 @@ const page = () => {
   const [isVisible, setIsvisible] = useState(false);
 
   const [removeData, setRemoveData] = useState(null);
+
+  const [isuserActive, setIsUserActive] = useState(true);
+
+  const [matchUser, setMatchUser] = useState([]);
+
+  const [count, setCount] = useState(0);
 
   const [userInput, setUserInput] = useState({
     id: "",
@@ -137,12 +143,6 @@ const page = () => {
     },
   ]);
 
-  const [matchUser, setMatchUser] = useState([]);
-
-  const [isuserActive, setIsUserActive] = useState(true);
-
-  const [count, setCount] = useState(0);
-
   function creatNewUser(newUser) {
     setUsers([...users, newUser]);
     setOriginalUsers([...originalUsers, newUser]);
@@ -231,48 +231,54 @@ const page = () => {
   }
 
   function handleToggleActive() {
-    const activeUsers = users.filter((item) => {
+    const activeuUsers = users.filter((item) => {
       return item.isActive === true;
     });
 
     if (isuserActive === true) {
       setUsers([...activeUsers]);
-      setIsUserActive(!isuserActive);
+      setIsUserActive(!activeuUsers);
     } else {
       setUsers([...originalUsers]);
-      setIsUserActive(!isuserActive);
-    }
-  }
-
-  function handleCountMinus() {
-    if (count >= 1) {
-      setCount(count - 1);
-      const matchCountIndexUser = originalUsers.filter((item) => {
-        return +item.id === count - 1;
-      });
-      setUsers(matchCountIndexUser);
-    } else {
-      setUsers([...originalUsers]);
+      setIsUserActive(!activeuUsers);
     }
   }
 
   function handleCountPlus() {
-    setCount(count + 1);
+    setCount((prevCount) => {
+      if (count === 0) {
+        setUsers([originalUsers]);
+      }
+      return prevCount + 1;
+    });
+  }
 
-    let countExceed = originalUsers.length + 1;
+  function handleCountMinus() {
+    setCount((prevCount) => {
+      if (count === 0) {
+        setUsers([originalUsers]);
+      }
+      return prevCount - 1;
+    });
+  }
 
-    if (count <= countExceed) {
-      let b = count + (1 % countExceed);
-      setCount(b);
-
-      const matchCountIndexUser = originalUsers.filter((item) => {
-        return +item.id === b;
-      });
-
-      setUsers(matchCountIndexUser);
-    } else {
-      setUsers([...originalUsers]);
+  useEffect(() => {
+    if (count === 0) {
+      setUsers([originalUsers]);
     }
+    const matchCountIndexUser = originalUsers[count % originalUsers.length];
+    setUsers([matchCountIndexUser]);
+    console.log(count);
+  }, [count]);
+
+  function Person(name) {
+    this.name = name;
+  }
+
+  Person.prototype.country = "india";
+
+  function Child(name) {
+    Person.call(thi);
   }
 
   return (
