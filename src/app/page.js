@@ -1,4 +1,4 @@
-import Header from "../Components/Header/page";
+import Header from "../Components/Header";
 import NewTodoList from "@/Components/NewTodoList";
 export default function Home() {
   return (

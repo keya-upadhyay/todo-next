@@ -13,7 +13,7 @@ const page = () => {
 
   const [removeData, setRemoveData] = useState(null);
 
-  const [isuserActive, setIsUserActive] = useState(true);
+  const [isUserActive, setIsUserActive] = useState(true);
 
   const [matchUser, setMatchUser] = useState([]);
 
@@ -37,7 +37,7 @@ const page = () => {
       phone: "9876543210",
       age: "30",
       hobby: "Cricket",
-      isActive: true,
+      isActive: false,
     },
     {
       id: "2",
@@ -55,7 +55,7 @@ const page = () => {
       phone: "7654321098",
       age: "35",
       hobby: "Reading",
-      isActive: true,
+      isActive: false,
     },
     {
       id: "4",
@@ -94,7 +94,7 @@ const page = () => {
       phone: "9876543210",
       age: "30",
       hobby: "Cricket",
-      isActive: true,
+      isActive: false,
     },
     {
       id: "2",
@@ -112,7 +112,7 @@ const page = () => {
       phone: "7654321098",
       age: "35",
       hobby: "Reading",
-      isActive: true,
+      isActive: false,
     },
     {
       id: "4",
@@ -142,6 +142,12 @@ const page = () => {
       isActive: true,
     },
   ]);
+
+  const [years, setUserYears] = useState(null);
+  const [months, setUserMonths] = useState(null);
+  const [days, setUserDays] = useState(null);
+  const [totalAge, setTotalAge] = useState(null);
+  const [serchedData, setSerchedData] = useState("");
 
   function creatNewUser(newUser) {
     setUsers([...users, newUser]);
@@ -188,7 +194,6 @@ const page = () => {
     // for this you should use toLowercase method
 
     let searchValue = searchData.toLowerCase();
-
     let matchedUsers = originalUsers.filter(
       (user) => searchValue && user.name.toLowerCase().includes(searchValue)
     );
@@ -218,6 +223,12 @@ const page = () => {
     setSearchData(searchString);
   }
 
+  function handleInputSearchClose(e) {
+    setSearchData("");
+    setUsers(originalUsers);
+    setMatchUser([]);
+  }
+
   function handleActiveUser(id, flag) {
     let activeUser = users.map((item) => {
       if (item.id === id) {
@@ -226,21 +237,20 @@ const page = () => {
         return item;
       }
     });
-
     setUsers(activeUser);
   }
 
   function handleToggleActive() {
-    const activeuUsers = users.filter((item) => {
+    const activeUsers = users.filter((item) => {
       return item.isActive === true;
     });
 
-    if (isuserActive === true) {
+    if (isUserActive === true) {
       setUsers([...activeUsers]);
-      setIsUserActive(!activeuUsers);
+      setIsUserActive(!isUserActive);
     } else {
       setUsers([...originalUsers]);
-      setIsUserActive(!activeuUsers);
+      setIsUserActive(!isUserActive);
     }
   }
 
@@ -262,24 +272,244 @@ const page = () => {
     });
   }
 
+  let currentYear = new Date().getFullYear();
+  let currentMonth = new Date().getMonth();
+
+  // let currentTime = new Date().getTime();
+  // let currentday = new Date().getDay();
+
+  function handleday(e) {
+    setUserDays(e.target.value);
+  }
+
+  function handlemonth(e) {
+    setUserMonths(e.target.value);
+  }
+
+  function handleyear(e) {
+    setUserYears(e.target.value);
+  }
+
+  function calculateAge() {
+    let year = currentYear - years;
+    if (months < currentMonth) {
+      let yearMinusOFcurrentYear = currentYear - 1;
+      let yearPlusOne = year - 1;
+      return ` ${yearMinusOFcurrentYear} years ${yearPlusOne} month `;
+    } else {
+      let month = currentMonth - months;
+      return `${year} year , ${month} month`;
+    }
+  }
+
   useEffect(() => {
     if (count === 0) {
       setUsers([originalUsers]);
     }
     const matchCountIndexUser = originalUsers[count % originalUsers.length];
     setUsers([matchCountIndexUser]);
-    console.log(count);
   }, [count]);
 
-  function Person(name) {
-    this.name = name;
-  }
+  // let products = [
+  //   { name: "Laptop", price: 1000, inStock: true },
+  //   { name: "Phone", price: 500, inStock: false },
+  //   { name: "Tablet", price: 300, inStock: true },
+  //   { name: "Monitor", price: 200, inStock: true },
+  // ];
 
-  Person.prototype.country = "india";
+  // let emp = ["KU", { name: "keya" }, "KU", { name: "keya" }];
 
-  function Child(name) {
-    Person.call(thi);
-  }
+  // let res = emp.filter((item, index, array) => {
+  //   if (array.indexOf(item) === index) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // });
+
+  // console.log(res);
+
+  // let ProdutsInStock = products.map((item) => item.name);
+
+  // let ProdutsInStocks = products.filter((item) => {
+  //   if (item.price > 500) {
+  //     return item;
+  //   } else {
+  //     return null;
+  //   }
+  // });
+
+  // let a = ProdutsInStocks;
+
+  // let productsName = a.map((item) => item.name);
+
+  // console.log("Name", ...productsName, ProdutsInStocks);
+
+  // const newArray = products
+  //   .filter((item) => item.price >= 500)
+  //   .map((item) => item.name);
+
+  // const newArray1 = newArray.map((item) => item.name);
+
+  // let str1 = "hello";
+  // let str2 = "olleh";
+  // let ss1 = str1.toString().split("").reverse().sort().join();
+
+  // let arr = ["jc", { name: "VK" }, "jc", { name: "VK" }];
+
+  // const ress = arr.filter((item, index, array) => {
+  //   if (array.indexOf(item) === index) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // });
+
+  // console.log(ress);
+
+  // const num = 5431;
+
+  // function addition(num) {
+  //   let sum = 0;
+  //   while (num !== 0) {
+  //     let rem = num % 10;
+  //     sum += rem;
+  //     num = parseInt(num / 10);
+  //   }
+  //   return sum > 9 ? addition(sum) : sum;
+  // }
+  // const res = addition(num);
+
+  // console.log(res);
+
+  // const number = "9816231529845612";
+
+  // const last = number.slice(-4);
+
+  // console.log(last);
+
+  // const res = last.padStart(number.length, "*");
+
+  // console.log(res);
+
+  // console.log(typeOf(2 - "hello"));
+
+  // var Null = null;
+
+  // console.log(typeof Null);
+  // null data type id {}
+
+  // const array = [];
+  // array[10] = 0;
+  // console.log(array);
+  // console.log(array[5], "hello");
+
+  // let a = 5;
+
+  // console.log(++a, "++a");
+  // console.log(a++, "a++");
+  // console.log(++a, "++a");
+
+  // for (i = 0; i < 5; i++) {
+  //   setTimeout(() => {
+  //     console.log(i);
+  //   }, 2000);
+  // }
+
+  // const arr = ["12he53", "33llo", "34wor99ld"];
+  // const arr2 = ["12he53", "33llo", "34wor99ld"];
+  // console.log(arr === arr2);
+  // const res = "helowrd";
+
+  // const nums = [1, 2, 3, 2, 4, 3];
+  // const res = nums.reduce((acc, curr) => {
+  //   return !acc.includes(curr) ? [...acc, curr] : acc;
+  // }, []);
+
+  // console.log(res);
+
+  // const num1 = 0;
+  // const num2 = "0";
+
+  // const red2 = num1 || null;
+  // const red1 = num2 || null;
+
+  // console.log(red2);
+  // console.log(red1);
+
+  // const str = "keya-k2*";
+  // const result = str.split("-");
+  // console.log(str);
+  // console.log(result);
+
+  // const arr = [1, 2, 3];
+
+  // arr.fill(0, 1, 3);
+
+  // console.log(arr);
+
+  // let sum = arr.reduceRight((acc, curr) => {
+  //   console.log(curr, "hello", acc);
+  //   return acc + curr;
+  // });
+
+  // console.log(sum);
+
+  // const nums = [2, 7, 11, 15];
+  // const target = 9;
+  // const output = [];
+
+  // for (let i = 0; i < nums.length - 1; i++) {
+  //   for (let j = i + 1; j <= nums.length; j++) {
+  //     if (nums[i] + nums[j] === target) {
+  //       console.log(i, j, "hello");
+  //       output.push([i, j]);
+  //     }
+  //   }
+  // }
+  // console.log(...output);
+
+  // const array = [1, ["2", 3], "4"];
+  // const result = [];
+
+  // for (let item of array) {
+  //   if (!Array.isArray(item)) {
+  //     result.push(item);
+  //   }
+  // }
+  // console.log(result);
+
+  // let a = 10;
+  // let b = 20;
+  // [a, b] = [b, a];
+  // console.log(a);
+  // console.log(b);
+
+  // class Person {
+  //   constructor() {
+  //     console.log("parent");
+  //   }
+  // }
+  // class Child extends Person {
+  //   constructor() {
+  //     console.log("child");
+  //     super();
+  //   }
+  // }
+
+  // const virat = new Child();
+
+  // const numbers = [1,2,3,22]
+
+  // const numbres = [1, 2, 3, 2, 2, 3];
+  // const obj = {};
+
+  // for (let num of numbres) {
+  //   obj[num] = (obj[num] || 0) + 1;
+  // }
+
+  // console.log(obj[1]);
+  // console.log(obj[2]);
 
   return (
     <>
@@ -311,9 +541,30 @@ const page = () => {
 
           {/* searchData filter */}
           <div className="flex items-center space-x-2">
-            <input onChange={handleInputSearch} name="searhInput" />
+            <input
+              onChange={handleInputSearch}
+              value={serchedData}
+              name="searhInput"
+            />
+            <button onClick={handleInputSearchClose}> X</button>
             <button
               onClick={handleSearch}
+              className="text-zinc-600 p-2 flex-none"
+            >
+              <Magnifier />
+            </button>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input onChange={handleday} name="searhInput" placeholder="day" />
+            <input
+              onChange={handlemonth}
+              name="searhInput"
+              placeholder="month"
+            />
+            <input onChange={handleyear} name="searhInput" placeholder="year" />
+            <button
+              onClick={calculateAge}
               className="text-zinc-600 p-2 flex-none"
             >
               <Magnifier />
@@ -326,20 +577,22 @@ const page = () => {
               Active users:
             </label>
 
-            <div
+            <button
               onClick={handleToggleActive}
               className={`relative w-14 h-7 rounded-full cursor-pointer transition-colors 
               ${
-                isuserActive
+                isUserActive
                   ? "bg-zinc-500 ransform translate-x-0"
                   : "bg-zinc-700"
               }`}
             >
-              <div
+              <span
                 className={`absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform 
-            ${!isuserActive ? "transform translate-x-7" : ""}`}
+            ${!isUserActive ? "transform translate-x-7" : ""}${
+                  isUserActive ? "bg-slate-300 " : ""
+                }`}
               />
-            </div>
+            </button>
           </div>
         </div>
 
@@ -353,6 +606,8 @@ const page = () => {
           setIsOpen={setIsOpen}
         />
 
+        {totalAge}
+
         <UserList
           users={users}
           matchUser={matchUser}
@@ -362,6 +617,8 @@ const page = () => {
           sortNameByAscending={sortNamesByAscending}
           handleActive={handleActiveUser}
         />
+
+        <block className="bg-gray-500 p-4 block">hello {calculateAge()}</block>
 
         <RemoveDataPopUp
           isVisible={isVisible}

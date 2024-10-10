@@ -15,9 +15,18 @@ const page = () => {
         </div>
         <ul>
           <li>
-            <Link href="/Todo">List</Link>
-            <Link href="/products">Products</Link>
-            <Link href="/user">user</Link>
+            <Link className="text-white hover:text-orange-600" href="/todo">
+              List
+            </Link>
+            <Link className="text-white hover:text-orange-600" href="/products">
+              Products
+            </Link>
+            <Link className="text-white hover:text-orange-600" href="/user">
+              user
+            </Link>
+            <Link className="text-white hover:text-orange-600" href="/calc">
+              Calc
+            </Link>
           </li>
         </ul>
       </nav>
